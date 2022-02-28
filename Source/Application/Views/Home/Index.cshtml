@@ -1,0 +1,68 @@
+﻿@model HomeViewModel
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>IO-Lab</title>
+	</head>
+	<body>
+		<h1>IO-Lab</h1>
+		<h2>Root</h2>
+		<p>
+			<a href="?Path=@Model.Root.FullName">@Model.Root.FullName</a>
+		</p>
+		<h2>Application-root</h2>
+		<p>
+			<a href="?Path=@Model.ApplicationRoot.FullName">@Model.ApplicationRoot.FullName</a>
+		</p>
+		@if(!string.IsNullOrWhiteSpace(Model.Path))
+		{
+			<h2>Path</h2>
+			<p>
+				<a href="?Path=@Model.Path">@Model.Path</a>
+			</p>
+			@if(Model.Exception == null)
+			{
+				@if(Model.Parent != null)
+				{
+					<h2>Parent</h2>
+					<p>
+						<a href="?Path=@Model.Parent.FullName">@Model.Parent.FullName</a>
+					</p>
+				}
+				@if(Model.Content == null)
+				{
+					@if(Model.Children.Any())
+					{
+						<h2>Children</h2>
+						<ul>
+							@foreach(var child in Model.Children)
+							{
+								<li>
+									<a href="?Path=@child.FullName">@child.Name</a>
+								</li>
+							}
+						</ul>
+					}
+					else
+					{
+						<p>
+							<i>No directories or files at this path.</i>
+						</p>
+					}
+				}
+				else
+				{
+					<h2>File-content</h2>
+					<pre>@Model.Content</pre>
+				}
+			}
+			else
+			{
+				<h2>Exception</h2>
+				<p>@Model.Exception</p>
+			}
+		}
+	</body>
+</html>
