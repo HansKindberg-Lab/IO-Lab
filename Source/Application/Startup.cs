@@ -1,8 +1,12 @@
 using System;
+using System.ComponentModel;
+using System.Net;
+using Application.Models.ComponentModel;
 using Application.Models.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -48,7 +52,21 @@ namespace Application
 			if(services == null)
 				throw new ArgumentNullException(nameof(services));
 
+			TypeDescriptor.AddAttributes(typeof(IPAddress), new TypeConverterAttribute(typeof(IpAddressTypeConverter)));
+			TypeDescriptor.AddAttributes(typeof(IPNetwork), new TypeConverterAttribute(typeof(IpNetworkTypeConverter)));
+
 			services.Configure<AuthenticationOptions>(this.Configuration.GetSection("Authentication"));
+
+			services.Configure<ForwardedHeadersOptions>(options =>
+			{
+				options.AllowedHosts.Clear();
+				options.KnownNetworks.Clear();
+				options.KnownProxies.Clear();
+			});
+
+			var forwardedHeadersSection = this.Configuration.GetSection("ForwardedHeaders");
+
+			services.Configure<ForwardedHeadersOptions>(forwardedHeadersSection);
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(options =>
