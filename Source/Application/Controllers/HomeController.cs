@@ -3,21 +3,22 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.Models.Views;
+using Application.Models.Views.Home;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Controllers
 {
-	public class HomeController : Controller
+	[Authorize]
+	public class HomeController : SiteController
 	{
 		#region Constructors
 
-		public HomeController(IHostEnvironment hostEnvironment, ILoggerFactory loggerFactory)
+		public HomeController(IHostEnvironment hostEnvironment, ILoggerFactory loggerFactory) : base(loggerFactory)
 		{
 			this.HostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
-			this.Logger = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger(this.GetType());
 		}
 
 		#endregion
@@ -25,7 +26,6 @@ namespace Application.Controllers
 		#region Properties
 
 		protected internal virtual IHostEnvironment HostEnvironment { get; }
-		protected internal virtual ILogger Logger { get; }
 
 		#endregion
 

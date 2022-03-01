@@ -1,24 +1,20 @@
 ﻿@model HomeViewModel
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>IO-Lab</title>
-	</head>
-	<body>
-		<h1>IO-Lab</h1>
-		<h2>Root</h2>
+<div class="card">
+	<div class="card-header">
+		<h1 class="h4 m-0 p-0">IO-Lab</h1>
+	</div>
+	<div class="card-body">
+		<h2 class="h5 mb-0">Root</h2>
 		<p>
 			<a href="?Path=@Model.Root.FullName">@Model.Root.FullName</a>
 		</p>
-		<h2>Application-root</h2>
+		<h2 class="h5 mb-0">Application-root</h2>
 		<p>
 			<a href="?Path=@Model.ApplicationRoot.FullName">@Model.ApplicationRoot.FullName</a>
 		</p>
 		@if(!string.IsNullOrWhiteSpace(Model.Path))
 		{
-			<h2>Path</h2>
+			<h2 class="h5 mb-0">Path</h2>
 			<p>
 				<a href="?Path=@Model.Path">@Model.Path</a>
 			</p>
@@ -26,7 +22,7 @@
 			{
 				@if(Model.Parent != null)
 				{
-					<h2>Parent</h2>
+					<h2 class="h5 mb-0">Parent</h2>
 					<p>
 						<a href="?Path=@Model.Parent.FullName">@Model.Parent.FullName</a>
 					</p>
@@ -35,7 +31,7 @@
 				{
 					@if(Model.Children.Any())
 					{
-						<h2>Children</h2>
+						<h2 class="h5 mb-0">Children</h2>
 						<ul>
 							@foreach(var child in Model.Children)
 							{
@@ -47,22 +43,24 @@
 					}
 					else
 					{
-						<p>
+						<div class="alert alert-warning">
 							<i>No directories or files at this path.</i>
-						</p>
+						</div>
 					}
 				}
 				else
 				{
-					<h2>File-content</h2>
-					<pre>@Model.Content</pre>
+					<h2 class="h5">File-content</h2>
+					<pre class="bg-light p-1">@Model.Content</pre>
 				}
 			}
 			else
 			{
-				<h2>Exception</h2>
-				<p>@Model.Exception</p>
+				<div class="alert alert-danger">
+					<h2 class="h5">Exception</h2>
+					<p>@Model.Exception</p>
+				</div>
 			}
 		}
-	</body>
-</html>
+	</div>
+</div>

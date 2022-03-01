@@ -1,4 +1,6 @@
 using System;
+using Application.Models.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +38,8 @@ namespace Application
 				.UseDeveloperExceptionPage()
 				.UseStaticFiles()
 				.UseRouting()
+				.UseAuthentication()
+				.UseAuthorization()
 				.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
 		}
 
@@ -43,6 +47,15 @@ namespace Application
 		{
 			if(services == null)
 				throw new ArgumentNullException(nameof(services));
+
+			services.Configure<AuthenticationOptions>(this.Configuration.GetSection("Authentication"));
+
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.LoginPath = "/Account/SignIn";
+					options.LogoutPath = "/Account/SignOut";
+				});
 
 			services.AddControllersWithViews();
 		}

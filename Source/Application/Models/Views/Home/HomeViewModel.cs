@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Application.Models.Views
+namespace Application.Models.Views.Home
 {
 	public class HomeViewModel
 	{

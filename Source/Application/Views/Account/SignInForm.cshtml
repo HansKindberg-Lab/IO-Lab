@@ -1,0 +1,11 @@
+﻿@model SignInForm
+<form asp-action="SignIn" asp-controller="Account">
+	<input asp-for="ReturnUrl" type="hidden" />
+	<div class="mb-3">
+		<label asp-for="Secret"></label>
+		<input asp-for="Secret" autocomplete="off" autofocus="autofocus" class="form-control" type="password" />
+	</div>
+	<div class="text-end">
+		<button class="btn btn-primary" type="submit">Sign in</button>
+	</div>
+</form>

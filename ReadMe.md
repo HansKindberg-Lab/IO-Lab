@@ -12,3 +12,15 @@ This application is only for investigating, laborating and testing. To expose th
 
 You can read about the security-risks here:
 - [CA3003: Review code for file path injection vulnerabilities](https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca3003)
+
+## Authentication
+
+Because of the security-risk explained above the application requires authentication. You need to enter a secret to get authorized. The secret is empty by default. You configure the secret in appsettings or in the environment-variables.
+
+In appsettings.json
+
+	{
+		"Authentication": {
+			"Secret": "your-preferred-secret"
+		}
+	}
