@@ -40,6 +40,7 @@ namespace Application
 
 			applicationBuilder
 				.UseDeveloperExceptionPage()
+				.UseForwardedHeaders()
 				.UseStaticFiles()
 				.UseRouting()
 				.UseAuthentication()
